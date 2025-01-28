@@ -199,6 +199,7 @@
             </configuration>
         </plugin>
 		</plugins>
+		  <finalName>FlowSystem</finalName>
 	</build>
 
 </project>
