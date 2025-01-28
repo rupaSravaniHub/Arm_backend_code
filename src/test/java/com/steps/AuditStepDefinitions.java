@@ -81,13 +81,14 @@ public class AuditStepDefinitions {
          assertEquals(200, response.statusCode());  
     }
     
-    @Then("I want the following audit details in the JSON format:{string}")
+    @Then("I want the following audit details in the JSON format:")
     public void i_want_the_following_audit_details_in_the_json_format(String expectedJson) throws JsonMappingException, JsonProcessingException{
     	 System.out.println("expectedJson "+expectedJson);
     	ObjectMapper mapper = new ObjectMapper();
         JsonNode expectedNode = mapper.readTree(expectedJson);
         JsonNode actualNode = mapper.readTree(response.getBody().asString());
         JsonNode actualElement = actualNode.isArray() ? actualNode.get(0) : actualNode;
+        
         System.out.println("Audit ID: " + actualElement.get("messageId").asText());
         System.out.println("flowId: " + actualElement.get("flowId").asText());
         System.out.println("region: " + actualElement.get("region").asText());
@@ -97,12 +98,12 @@ public class AuditStepDefinitions {
         assertEquals(expectedNode, actualElement, "Response JSON does not match the expected JSON.");
     }
     
-    @After
-    public void closeBrowser() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+//    @After
+//    public void closeBrowser() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
 }
 

@@ -12,6 +12,6 @@ import io.cucumber.junit.CucumberOptions;
     plugin = {"pretty", "html:target/cucumber-reports.html"} // Cucumber plugins for pretty output and HTML report generation
 //    tags = "@Audit" // Optional: If you use tags, you can filter by tags here
 )
-public class FlowSearchRunner {
+public class ViewTesting {
 
 }

@@ -70,7 +70,7 @@ public class FlowSearchStepDefiniton {
         assertEquals(200, response.statusCode());  
     }
 
-    @Then("I want the following valid flow search in the JSON format:{string}")
+    @Then("I want the following valid flow search in the JSON format:")
     public void iWantTheFollowingValidFlowSearchInTheJSONFormat(String expectedJson) throws JsonMappingException, JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode expectedNode = mapper.readTree(expectedJson);
@@ -80,10 +80,10 @@ public class FlowSearchStepDefiniton {
         assertEquals(expectedNode, actualElement, "Response JSON does not match the expected JSON.");
     }
 
-    @After
-    public void closeBrowser() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+//    @After
+//    public void closeBrowser() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 }

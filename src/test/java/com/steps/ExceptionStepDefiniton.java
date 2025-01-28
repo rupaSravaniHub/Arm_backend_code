@@ -64,21 +64,27 @@ public class ExceptionStepDefiniton {
     public void iHitTheBackendAPIWithTheProvidedParameters(String apiUrl) {
         apiResponse = RestAssured.given()
                 .get(apiUrl);
-        System.out.println("Response Body: " + apiResponse.asString());
-        System.out.println("Response Code: " + apiResponse.statusCode());
+//        System.out.println("Response Body: " + apiResponse.asString());
+//        System.out.println("Response Code: " + apiResponse.statusCode());
     }
 
     @Then("I should see the following exception details displayed on the UI:")
     public void iShouldSeeTheFollowingExceptionDetailsDisplayedOnTheUI(String expectedResponse) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-//        JsonNode expectedNode = mapper.readTree(expectedResponse);
+
+        // Deserialize expectedResponse to JsonNode
+        JsonNode expectedNode = mapper.readTree(expectedResponse);
+
+        // Deserialize the actual response from the API
         JsonNode actualNode = mapper.readTree(apiResponse.asString());
+
+        // If the actual response is an array, get the first element, otherwise use the root
         JsonNode actualElement = actualNode.isArray() ? actualNode.get(0) : actualNode;
-        System.err.println(expectedResponse +"\n actualElement "+actualElement);
-        System.err.println("----------------- ");
-      
-        assertEquals(expectedResponse, actualElement, "Response JSON does not match the expected JSON.");
+
+        // Now, compare the expected and actual JSON objects
+        assertEquals(expectedNode, actualElement, "Response JSON does not match the expected JSON.");
     }
+
 
     @And("the response status from the backend API should be {int}")
     public void theResponseStatusFromTheBackendAPIShouldBe(int expectedStatusCode) {
@@ -87,30 +93,56 @@ public class ExceptionStepDefiniton {
         assertEquals(expectedStatusCode, apiResponse.statusCode());
     }
 
-    @When("I hit the flows backend API {string} with the provided parameters")
-    public void iHitTheFlowsBackendAPIWithTheProvidedParameters(String apiUrl) {
+    @When("I hit the exceptions backend API {string} with the provided parameters {string}, {string}, and {string}")
+    public void iHitTheExceptionsBackendAPIWithTheProvidedParameters(String apiUrl, String flowId, String flowName, String region) {
+        // Log query parameters for debugging
+        System.out.println("Query Parameters: flowId=" + flowId + ", flowName=" + flowName + ", region=" + region);
+
+        // Make the API call
         apiResponse = RestAssured.given()
-                .queryParam("flowId", flowId)
-                .queryParam("flowName", flowName)
-                .queryParam("region", region)
-                .when()
-                .get(apiUrl);
+            .queryParam("flowId", flowId)
+            .queryParam("flowName", flowName)
+            .queryParam("region", region)
+            .when()
+            .get(apiUrl);
+
+        // Log the API URL and response details for debugging
+        System.out.println("API URL: " + apiUrl);
+        if (apiResponse != null) {
+            System.out.println("Response Status: " + apiResponse.statusCode());
+            System.out.println("Response Body: " + apiResponse.getBody().asString());
+        } else {
+            System.out.println("API response is null.");
+        }
     }
+
+
 
     @Then("I should see the following flow details displayed on the UI:")
     public void iShouldSeeTheFollowingFlowDetailsDisplayedOnTheUI(String expectedResponse) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode expectedNode = mapper.readTree(expectedResponse);
         JsonNode actualNode = mapper.readTree(apiResponse.getBody().asString());
-
+        System.out.println("actualNode"+actualNode);
         JsonNode actualElement = actualNode.isArray() ? actualNode.get(0) : actualNode;
         assertEquals(expectedNode, actualElement, "Response JSON does not match the expected JSON.");
     }
-
-    @After
-    public void closeBrowser() {
-        if (driver != null) {
-            driver.quit();
+    
+    @Then("status from the backend API should be {int}")
+    public void statusFromTheBackendAPIShouldBe(int expectedStatusCode) {
+        if (apiResponse != null) {
+            int actualStatusCode = apiResponse.getStatusCode();
+            org.junit.Assert.assertEquals("The response status code is not as expected.", expectedStatusCode, actualStatusCode);
+        } else {
+            org.junit.Assert.fail("API response is null, cannot verify status code.");
         }
     }
+
+
+//    @After
+//    public void closeBrowser() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 }

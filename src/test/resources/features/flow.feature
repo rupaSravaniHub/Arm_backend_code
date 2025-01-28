@@ -13,13 +13,13 @@ Feature: Flow Controller Tests
             "username": "admin",
             "password": "admin"
           },
-          "Outbound": {
+          "Outbound": [[{
             "topic": "",
             "queue": "ACTIVEMQ.SAMPLE.MU.OUT",
             "brokerurl": "tcp://172.17.1.25:61616",
             "username": "admin",
             "password": "admin"
-          },
+          }]],
           "stages": "INGATE.OUTGATE",
           "flownodes": [
             {

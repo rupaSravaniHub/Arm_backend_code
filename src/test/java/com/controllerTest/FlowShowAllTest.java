@@ -11,6 +11,6 @@ import io.cucumber.junit.CucumberOptions;
 		glue = "com.steps",
 		plugin = {"pretty", "html:target/cucumber-reports"}
 		)
-public class FlowShowAllRunner {
+public class FlowShowAllTest {
 
 }
