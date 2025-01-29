@@ -8,7 +8,8 @@ public class ReplayRoute extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
-		from("direct:Replay")		
+		from("direct:Replay")	
+				.marshal().json()
 				.setHeader("originalMessageId", jsonpath("$.messageId"))
 				.setHeader("scenarioId", jsonpath("$.flowId")).setHeader("scenarioName", jsonpath("$.flowName"))
 				.setHeader("countryCode", jsonpath("$.region")).setHeader("hops", jsonpath("$.stages"))
