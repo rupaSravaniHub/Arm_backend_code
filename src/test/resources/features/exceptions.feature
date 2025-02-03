@@ -6,7 +6,7 @@ Feature: Retrieve Exception Details
     And I enter "PURCHASEORDERRPA108" into the "Flow Name" field
     And I enter "MS" into the "Region" field
     And I click the "Faults" button
-    Then I open the UI URL after form submission "http://localhost:3000/exceptionDetails"
+    Then I open the UI URL after form submission "http://frontend:3000/exceptionDetails"
     When I hit the backend API "http://localhost:9090/exception?flowId=FLOW1047&flowName=PURCHASEORDERRPA108&region=MS"
     Then I should see the following exception details displayed on the UI:
       """
