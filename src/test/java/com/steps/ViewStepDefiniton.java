@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FlowSearchStepDefiniton {
+public class ViewStepDefiniton {
 
     private WebDriver driver;
     private Response response;
@@ -80,10 +80,10 @@ public class FlowSearchStepDefiniton {
         assertEquals(expectedNode, actualElement, "Response JSON does not match the expected JSON.");
     }
 
-//    @After
-//    public void closeBrowser() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @After
+    public void closeBrowser() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }

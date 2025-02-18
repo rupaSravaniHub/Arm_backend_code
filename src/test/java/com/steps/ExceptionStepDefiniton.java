@@ -139,10 +139,10 @@ public class ExceptionStepDefiniton {
     }
 
 
-//    @After
-//    public void closeBrowser() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @After
+    public void closeBrowser() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }

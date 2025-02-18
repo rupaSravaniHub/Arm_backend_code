@@ -7,10 +7,10 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "src/test/resources/features/flowShowAll.feature",
+		features = "src/test/resources/features/viewAll.feature",
 		glue = "com.steps",
 		plugin = {"pretty", "html:target/cucumber-reports"}
 		)
-public class FlowShowAllTest {
+public class viewAllTest {
 
 }
