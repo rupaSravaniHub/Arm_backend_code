@@ -6,7 +6,7 @@ Feature: Audits
     And I enter "PURCHASEORDERRPA108" into the "Flow Name" label
     And I enter "MS" into the "Region" label
     And I click "Logs" button
-    Then I open audit UI URL after form submission "http://frontend:3000/auditDetails"
+    Then I open audit UI URL after form submission "http://localhost:3000/auditDetails"
     When I hit the audit API "http://localhost:9090/audits?flowId=FLOW1047&flowName=PURCHASEORDERRPA108&region=MS"
     Then the response status should be 200
     And I want the following audit details in the JSON format:

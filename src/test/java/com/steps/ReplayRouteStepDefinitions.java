@@ -27,15 +27,16 @@ public class ReplayRouteStepDefinitions {
 	private Map<String, Object> messageBody;
 	private MockEndpoint testDirectMock;
 
-//	@Given("the message is sent to the \"direct:Replay\" route")
-//	public void sendMessageToReplayRoute(String message) throws JsonMappingException, JsonProcessingException {
-//
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		messageBody = objectMapper.readValue(message, Map.class);
-//		producerTemplate.sendBody("direct:Replay", messageBody);
-//	}
 
-	@Given("consume the message from {string}")
+	@Given("the message is sent to the \"direct:Replay\" route")
+	public void sendMessageToReplayRoute(String message) throws JsonMappingException, JsonProcessingException {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		messageBody = objectMapper.readValue(message, Map.class);
+		producerTemplate.sendBody("direct:Replay", messageBody);
+	}
+
+	@Then("consume the message from {string}")
 	public void ConsumeMessage(String route1) throws Exception {
 		MockEndpoint mockEndpoint = camelContext.getEndpoint("mock:route1", MockEndpoint.class);
 		MockEndpoint.assertIsSatisfied(camelContext);
@@ -44,9 +45,11 @@ public class ReplayRouteStepDefinitions {
 	@And("the payload and set headers should be routed to the queue")
 	public void routeMessageToTestQueue() throws Exception {
 
+
 		String response = (String) producerTemplate.requestBody("direct:Replay");
 		ObjectMapper objectMapper = new ObjectMapper();
 		messageBody = objectMapper.readValue(response, Map.class);
+
 		String queueName = ((String) messageBody.get("exceptionRoute")).toUpperCase();
 		String MOCK_ENDPOINT_URI = "mock:activemq:queue:" + queueName;
 		System.out.println("MOCK_ENDPOINT_URI --- " + MOCK_ENDPOINT_URI);
@@ -79,4 +82,6 @@ public class ReplayRouteStepDefinitions {
 		System.err.println("direct:replayStatus "+response);
 	}
 
+
 }
+
