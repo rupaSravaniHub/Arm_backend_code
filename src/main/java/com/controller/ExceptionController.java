@@ -20,10 +20,10 @@ public class ExceptionController {
 //	http://localhost:9090/exception?flowId=FLOW1001&flowName=ORDERDETAILS&region=MU
 	@CrossOrigin
 	@GetMapping("/exception")
-	public ResponseEntity<?> getException(@RequestParam("flowId") String flowId, @RequestParam("flowName") String flowName, @RequestParam("region") String region) {
+	public ResponseEntity<?> getException(@RequestParam("flowId") String flowId, @RequestParam("flowName") String flowName,
+			@RequestParam("region") String region) {
 		System.err.println(flowId+" "+region+" "+flowName);
 		Exception exception = exceptionRepo.findByFlowIdAndFlowNameAndRegion(flowId,flowName,region);
-		System.out.println("exception : "+ exception.getFlowId());
 		if(exception != null)
 			return new ResponseEntity<>(exception, HttpStatus.OK);
 		else
