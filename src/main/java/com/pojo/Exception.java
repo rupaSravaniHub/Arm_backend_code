@@ -9,33 +9,36 @@ import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Document(collection ="Exception")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Exception {
 
 	@Id
 	String 	messageId;
+	@Nullable
+	@Field("transdata")
+	String transdata;
 	
 	String 	flowId;
 	String  flowName;
 	String 	region;
-	@Nullable
-	@Field("transdata")
-	String transdata;
 	String  inboundQueue,
-			stages,
 			brokerurl,
+			stages,
 			outboundQueue,
 			exceptionTimeStamp,
 			exceptionRoute,
 			replayableStatus,
 			errorCode,
+//			exitStatus,
 			errorMessage;
 	
-	Object	payload ;
+	
+//	byte[]	payload ;
+	String	payload ;
 }
-
-
