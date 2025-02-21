@@ -15,20 +15,27 @@ import com.pojo.Audit;
 
 @RestController
 public class AuditController {
-	
+
 	@Autowired
 	AuditRepo auditRepo;
 
 //	http://localhost:9090/audits?flowId=FLOW1001&flowName=ORDERDETAILS&region=MU
-		 // Get all Audits 
-	    @CrossOrigin
-	    @GetMapping("/audits")
-	    public ResponseEntity<?> getAudit(@RequestParam("flowId") String flowId, @RequestParam("flowName") String flowName, @RequestParam("region") String region) {
-			List<Audit> retrivedAuditTransDetails = auditRepo.findByFlowIdAndFlowNameAndRegion(flowId, flowName, region);
-			System.out.println("Audits "+retrivedAuditTransDetails);
-			if(retrivedAuditTransDetails != null)
-				return new ResponseEntity<>(retrivedAuditTransDetails, HttpStatus.OK);
-			else
-				return new ResponseEntity<>("Audits is failed to retrive.", HttpStatus.BAD_REQUEST);
-		}
+	// Get all Audits
+	@CrossOrigin
+	@GetMapping("/audits")
+	public ResponseEntity<?> getAudit(@RequestParam("flowId") String flowId, @RequestParam("flowName") String flowName,
+			@RequestParam("region") String region) {
+		List<Audit> retrivedAuditTransDetails = auditRepo.findByFlowIdAndFlowNameAndRegion(flowId, flowName, region);
+		System.out.println("Audits " + retrivedAuditTransDetails);
+		if (retrivedAuditTransDetails != null)
+			return new ResponseEntity<>(retrivedAuditTransDetails, HttpStatus.OK);
+		else
+			return new ResponseEntity<>("Audits is failed to retrive.", HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	
+	
+	
+	
 }
