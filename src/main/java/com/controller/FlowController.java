@@ -26,7 +26,7 @@ public class FlowController {
 	@Autowired
 	FlowRepo flowRepo;
 	
-	// http://localhost:9090/stream
+//	http://localhost:9090/stream
 //	Store the Flow
 	@CrossOrigin
 	 @PostMapping("/stream")
@@ -38,31 +38,43 @@ public class FlowController {
 	            return ResponseEntity.status(500).body("Error saving flow: " + e.getMessage());
 	        }
 	    }
+	
+//	http://localhost:9090/search?flowId=FLOW1001&flowName=ORDERDETAILS&region=MU
+	 // Get all Streams (GET)
+    @CrossOrigin
+    @GetMapping("/search")
+    public ResponseEntity<Flow> getAllStreams(@RequestParam String flowId, @RequestParam String flowName, @RequestParam String region) {
+    	System.err.println("flowId, flowName, region " +flowRepo.findByFlowIdAndFlowNameAndRegion(flowId,flowName,region));
+        try {
+            Flow streams = flowRepo.findByFlowIdAndFlowNameAndRegion(flowId,flowName,region);
+            System.err.println("get "+streams);
+            return ResponseEntity.ok(streams);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+    
+//    http://localhost:9090/flowStreams?flowId=FLOW1001
+    @CrossOrigin
+    @GetMapping("/flowStreams")
+    public ResponseEntity<Flow> getAllStreams(@RequestParam String flowId) {
+    	System.err.println("flowId" +flowRepo.findByFlowId(flowId));
+        try {
+            Flow streams = flowRepo.findByFlowId(flowId);
+            System.err.println("get "+streams);
+            return ResponseEntity.ok(streams);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 
-		// http://localhost:9090/search?flowId=FLOW1001&flowName=ORDERDETAILS&region=MU
-		// Get all Streams (GET)
-		@CrossOrigin
-		@GetMapping("/search")
-		public ResponseEntity<Flow> getAllStreams(@RequestParam("flowId") String flowId,
-				@RequestParam("flowName") String flowName, @RequestParam("region") String region) {
-			System.err.println(
-					"flowId, flowName, region " + flowRepo.findByFlowIdAndFlowNameAndRegion(flowId, flowName, region));
-			try {
-				Flow streams = flowRepo.findByFlowIdAndFlowNameAndRegion(flowId, flowName, region);
-				System.err.println("get " + streams);
-				return ResponseEntity.ok(streams);
-			} catch (Exception e) {
-				return ResponseEntity.status(500).body(null);
-			}
-		}
-
-		// http://localhost:9090/showAll
-		@CrossOrigin
-		@GetMapping("/showAll")
-		public List<Flow> getViewAllDetails() {
-			System.out.println("all ");
-			System.out.println(flowRepo.findAll());
-			return flowRepo.findAll();
-		}
-
+//  http://localhost:9090/showAll
+    @CrossOrigin
+    @GetMapping("/showAll")
+    public List<Flow> getViewAllDetails(){
+	    System.out.println("all ");
+	    System.out.println(flowRepo.findAll());
+	    return flowRepo.findAll();
+    }
+   
 }
