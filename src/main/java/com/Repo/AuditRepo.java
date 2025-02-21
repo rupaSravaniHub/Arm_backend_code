@@ -12,4 +12,5 @@ public interface AuditRepo extends MongoRepository<Audit, String> {
 	
 	List<Audit> findByFlowIdAndFlowNameAndRegion(String flowId, String flowName, String region);
 	
+	Audit findByMessageId(String messageId);
 }
